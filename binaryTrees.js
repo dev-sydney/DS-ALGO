@@ -102,6 +102,11 @@ class BST {
     }
     this.size++;
   }
+  /**
+   * Traverses the binary tree to find the node with the least value
+   * @param {*} currNode The current node, defaults to the tree's root node
+   * @returns the node's value which is the least value
+   */
   min(currNode = this.root) {
     if (!currNode.left) {
       return currNode.data;
@@ -109,12 +114,36 @@ class BST {
       return this.min(currNode.left);
     }
   }
+
+  /**
+   * Traverses the binary tree to find the node with the greatest value
+   * @param {Object} currNode The current node, defaults to the tree's root node
+   * @returns the node's value which is the greatest value
+   */
   max(currNode = this.root) {
     if (!currNode.right) {
       return currNode.data;
     } else {
       return this.max(currNode.right);
     }
+  }
+  /**
+   *
+   * @param {*} data
+   * @param {*} currNode
+   * @returns {Boolean} true if the value specified as the parameter is in the tree
+   */
+  includes(data, currNode = this.root) {
+    if (data === currNode.data) {
+      return true;
+    }
+    if (data < currNode.data && currNode.left) {
+      return this.includes(data, currNode.left);
+    }
+    if (data > currNode.data && currNode.right) {
+      return this.includes(data, currNode.right);
+    }
+    return false;
   }
 }
 
@@ -127,3 +156,9 @@ sydneyTree.add(100);
 console.log(sydneyTree.size);
 console.log(sydneyTree.min());
 console.log(sydneyTree.max());
+console.log(sydneyTree.includes(45));
+console.log(sydneyTree.includes(30));
+console.log(sydneyTree.includes(20));
+console.log(sydneyTree.includes(10));
+console.log(sydneyTree.includes(100));
+console.log(sydneyTree.includes(1));
