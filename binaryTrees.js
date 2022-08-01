@@ -134,31 +134,86 @@ class BST {
    * @returns {Boolean} true if the value specified as the parameter is in the tree
    */
   includes(data, currNode = this.root) {
-    if (data === currNode.data) {
-      return true;
-    }
+    //CASE 1: data found
+    if (data === currNode.data) return true;
+
+    //CASE 2:
     if (data < currNode.data && currNode.left) {
       return this.includes(data, currNode.left);
     }
+
+    //CASE 3:
     if (data > currNode.data && currNode.right) {
       return this.includes(data, currNode.right);
     }
+
     return false;
+  }
+  //N, L, R
+  preOrderTraversal() {
+    let results = [];
+
+    const traverse = node => {
+      results.push(node.data);
+
+      if (node.left) traverse(node.left);
+
+      if (node.right) traverse(node.right);
+    };
+
+    traverse(this.root);
+
+    return results;
+  }
+  //L, N, R
+  inOrderTraversal() {
+    let results = [];
+    const traverse = node => {
+      if (node.left) traverse(node.left);
+      results.push(node.data);
+      if (node.right) traverse(node.right);
+    };
+    traverse(this.root);
+    return results;
+  }
+  //L, R, N
+  postOrderTraversal() {
+    let results = [];
+    const traverse = node => {
+      if (node.left) traverse(node.left);
+
+      if (node.right) traverse(node.right);
+
+      results.push(node.data);
+    };
+
+    traverse(this.root);
+
+    return results;
   }
 }
 
 const sydneyTree = new BST();
-sydneyTree.add(45);
-sydneyTree.add(30);
-sydneyTree.add(20);
 sydneyTree.add(10);
-sydneyTree.add(100);
+sydneyTree.add(7);
+sydneyTree.add(11);
+sydneyTree.add(6);
+sydneyTree.add(8);
+sydneyTree.add(1);
+sydneyTree.add(9);
+
+sydneyTree.add(20);
+sydneyTree.add(14);
+sydneyTree.add(22);
 console.log(sydneyTree.size);
 console.log(sydneyTree.min());
 console.log(sydneyTree.max());
-console.log(sydneyTree.includes(45));
+// console.log(sydneyTree.inOrderTraversal());
+// console.log(sydneyTree.preOrderTraversal());
+console.log(sydneyTree.postOrderTraversal());
+/* console.log(sydneyTree.includes(45));
 console.log(sydneyTree.includes(30));
-console.log(sydneyTree.includes(20));
+console.log(sydneyTree.includes(3));
 console.log(sydneyTree.includes(10));
 console.log(sydneyTree.includes(100));
-console.log(sydneyTree.includes(1));
+console.log(sydneyTree.includes(1)); */
