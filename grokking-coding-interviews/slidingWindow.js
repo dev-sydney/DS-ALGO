@@ -42,25 +42,32 @@ const findMaxSum = (arr, windowLength) => {
 
   return maxValue;
 };
+
 console.log('findMaxSum: ', findMaxSum([2, 3, 4, 1, 5], 2));
 let inputArr = [3, 4, 1, 1, 6];
 
-const findSmallestSum = (arr, sum) => {
-  let windowSum, minLength, windowStart;
-  windowStart = minLength = windowSum = 0;
+/**
+ * Finds the smallest window size of a target greater or equal to the target sum
+ * @param {*} targetSum
+ * @param {*} arr
+ * @returns {Number} the smallest window size
+ */
+const smallestSum = (targetSum, arr) => {
+  let minWindowSize = Infinity;
+  let windowStart = 0;
+  let currentWindowSum = 0; //the sum of the current window
 
   for (let i = 0; i < arr.length; i++) {
-    windowSum += arr[i];
+    currentWindowSum += arr[i];
 
-    while (windowSum >= sum) {
-      minLength = Math.min(minLength, minLength - windowStart + 1);
-      windowSum -= arr[windowStart];
-      windowStart += 1;
+    while (currentWindowSum >= targetSum) {
+      minWindowSize = Math.min(minWindowSize, i - windowStart + 1);
+      currentWindowSum -= arr[i];
+      windowStart++;
     }
   }
-
-  if (minLength === 0) return 0;
-  return minLength;
+  return minWindowSize;
 };
-// console.log(findMax(arr, 3));
-// console.log(findSmallestSum(inputArr, 8));
+
+let sampleInputArr = [4, 2, 2, 7, 8, 1, 2, 8, 10];
+console.log('Smallest Sum of the array:', smallestSum(8, sampleInputArr));
